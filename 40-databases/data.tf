@@ -38,5 +38,5 @@ data "aws_ssm_parameter" "mysql_sg_id" {
 
 
 data "aws_ssm_parameter" "database_subnet_ids" {
-  name = "/${var.project_name}/${var.environment}/database_subnet-id"
+  name = "/${var.project_name}/${var.environment}/database_subnet_id"
 }
