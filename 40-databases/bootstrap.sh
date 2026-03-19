@@ -29,4 +29,7 @@ else
     cd $ANSIBLE_DIR
 fi
 
-ansible-playbook -e component=$component -e env=$environment main.yaml
+echo 'password' > /tmp/.vault_pass
+chmod 600 /tmp/.vault_pass
+ansible-playbook -e component=$component -e env=$environment --vault-password-file=/tmp/.vault_pass main.yaml || ansible-playbook -e component=$component -e env=$environment main.yaml
+rm -f /tmp/.vault_pass
