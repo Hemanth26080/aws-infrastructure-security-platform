@@ -135,9 +135,48 @@ resource "aws_instance" "mysql" {
     )
 }
 
+resource "aws_iam_role" "ec2_ssm_parameter_read" {
+  name = "EC2SSMParameterRead"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "ssm_parameter_read" {
+  name = "ReadSSMParametersStoreAccess"
+  role = aws_iam_role.ec2_ssm_parameter_read.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid      = "ReadSSMParametersStoreAccess",
+        Effect   = "Allow",
+        Action   = [
+          "ssm:GetParameter",
+          "ssm:GetParameters",
+          "ssm:GetParametersByPath",
+          "ssm:DescribeParameters"
+        ],
+        Resource = "arn:aws:ssm:*:*:parameter/*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_instance_profile" "mysql" {
   name = "mysql"
-  role = "EC2SSMParameterRead"
+  role = aws_iam_role.ec2_ssm_parameter_read.name
 }
 
 resource "terraform_data" "mysql" {
