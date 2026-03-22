@@ -2,7 +2,8 @@
 
 component=$1
 environment=$2
-dnf install ansible -y
+dnf install python3-pip ansible -y
+pip3 install botocore boto3
 #ansible-pull -U https://github.com/Hemanth26080/ansible_roboshop_roles.git -e component=$component main.yaml
 # git clone ansible-playbook
 # cd ansible-playbook
