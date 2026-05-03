@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket       = "terraform-s3-bucket-26"
+    bucket       = "terraform-s3-bucket-26s"
     key          = "roboshop-dev-sg" # Unique key for SG
     region       = "us-east-1"
     use_lockfile = true
