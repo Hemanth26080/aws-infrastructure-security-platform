@@ -5,6 +5,7 @@ locals {
   rabbitmq_sg_id = data.aws_ssm_parameter.rabbitmq_sg_id.value
   mysql_sg_id = data.aws_ssm_parameter.mysql_sg_id.value
   database_subnet_id = split("," , data.aws_ssm_parameter.database_subnet_ids.value)[0]
+  bastion_public_ip = data.aws_ssm_parameter.bastion_public_ip.value
   ami_id = data.aws_ami.ami_id.id
   common_tags = {
       Project = var.project_name
