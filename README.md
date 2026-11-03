@@ -4,6 +4,8 @@ Enterprise-grade AWS infrastructure with security-first design using Terraform m
 
 ## Architecture
 
+![AWS Infrastructure Security Platform Architecture](docs/architecture-diagram.png)
+
 This repository contains modular Terraform configurations for building a production-ready AWS environment:
 
 - **00-vpc** - VPC with public/private subnets across multiple AZs
@@ -18,6 +20,16 @@ This repository contains modular Terraform configurations for building a product
 - **80-frontend-alb** - ALB for frontend applications
 - **90-components** - Shared infrastructure components
 - **91-cloudfront** - CDN distribution with WAF
+
+## Quick Start and stop Guide
+
+```bash
+for i in 00-vpc 10-sg 30-sg_rules 20-bastion 40-databases 50-backend-alb 60-catalogue 70-acm 80-frontend-alb 90-components 91-cloudfront; do (cd "$i" && terraform apply -auto-approve); done
+```
+
+```bash
+for i in 91-cloudfront 90-components 80-frontend-alb 70-acm 60-catalogue 50-backend-alb 40-databases 20-bastion 30-sg_rules 10-sg 00-vpc; do (cd "$i" && terraform destroy -auto-approve) done
+```
 
 ## Tech Stack
 
